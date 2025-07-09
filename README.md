@@ -1,93 +1,132 @@
-# python_script_image_optimizer
+# Optimizador de Imágenes
 
+Este script de Python está diseñado para optimizar imágenes de forma recursiva en un directorio, comprimiendo las imágenes lo máximo posible mientras mantiene su nombre y ubicación original.
 
+## Características
 
-## Getting started
+- Escaneo recursivo de directorios y subdirectorios
+- Compresión de imágenes para reducir su tamaño
+- Conversión opcional de formato (webp, png, jpg)
+- Redimensionamiento opcional manteniendo la relación de aspecto
+- Procesamiento por lotes de múltiples imágenes
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Requisitos
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- Python 3.x
+- Pillow (PIL Fork)
 
-## Add your files
+## Instalación
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+1. Clona este repositorio:
 
+```bash
+git clone https://github.com/tu-usuario/python_script_image_optimizer.git
+cd python_script_image_optimizer
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/raupulus/python_script_image_optimizer.git
-git branch -M main
-git push -uf origin main
+
+2. Ejecuta el script `run_optimizer.sh` que creará automáticamente un entorno virtual e instalará las dependencias necesarias:
+
+```bash
+chmod +x run_optimizer.sh
+./run_optimizer.sh -h
 ```
 
-## Integrate with your tools
+## Uso
 
-- [ ] [Set up project integrations](https://gitlab.com/raupulus/python_script_image_optimizer/-/settings/integrations)
+El script se puede ejecutar directamente usando el script bash proporcionado:
 
-## Collaborate with your team
+```bash
+./run_optimizer.sh [directorio] [opciones]
+```
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+### Opciones disponibles:
 
-## Test and Deploy
+- `-f, --format`: Formato de salida (webp, png, jpg). Si no se especifica, se mantiene el formato original.
+- `-w, --width`: Ancho máximo de la imagen. Se mantiene la relación de aspecto.
+- `-a, --height`: Alto máximo de la imagen. Se mantiene la relación de aspecto.
+- `-v, --verbose`: Muestra información detallada del proceso.
 
-Use the built-in continuous integration in GitLab.
+### Ejemplos de uso:
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+1. Optimizar todas las imágenes en un directorio manteniendo su formato original:
 
-***
+```bash
+./run_optimizer.sh ~/Imágenes/
+```
 
-# Editing this README
+2. Convertir todas las imágenes a formato WebP:
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+```bash
+./run_optimizer.sh ~/Imágenes/ -f webp
+```
 
-## Suggestions for a good README
+3. Redimensionar todas las imágenes para que tengan un ancho máximo de 1200px:
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+```bash
+./run_optimizer.sh ~/Imágenes/ -w 1200
+```
 
-## Name
-Choose a self-explaining name for your project.
+4. Convertir a PNG y establecer una altura máxima de 800px:
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+```bash
+./run_optimizer.sh ~/Imágenes/ -f png -a 800
+```
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+5. Mostrar información detallada durante el proceso:
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+```bash
+./run_optimizer.sh ~/Imágenes/ -v
+```
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+## Cómo funciona
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+1. El script recorre recursivamente el directorio especificado buscando archivos de imagen.
+2. Para cada imagen encontrada:
+   - La carga utilizando la biblioteca Pillow
+   - Aplica la conversión de formato si se especificó
+   - Redimensiona la imagen si se especificó un ancho o alto máximo
+   - Guarda la imagen optimizada en la misma ubicación, sobrescribiendo el archivo original
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## Entorno Virtual
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+El script `run_optimizer.sh` gestiona automáticamente el entorno virtual:
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+1. Verifica si existe un entorno virtual en la carpeta `venv`
+2. Si no existe, lo crea e instala las dependencias necesarias
+3. Activa el entorno virtual antes de ejecutar el script
+4. Desactiva el entorno virtual al finalizar
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Si prefieres gestionar manualmente el entorno virtual:
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+```bash
+# Crear entorno virtual
+python3 -m venv .venv
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+# Activar entorno virtual
+source venv/bin/activate  # En Linux/Mac
+# o
+venv\Scripts\activate     # En Windows
 
-## License
-For open source projects, say how it is licensed.
+# Instalar dependencias
+pip install -r requirements.txt
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+# Ejecutar el script
+python image_optimizer.py [directorio] [opciones]
+
+# Desactivar entorno virtual cuando termines
+deactivate
+```
+
+## Notas importantes
+
+- El script sobrescribe los archivos originales, por lo que es recomendable hacer una copia de seguridad antes de ejecutarlo.
+- No se pueden especificar tanto el ancho como el alto a la vez, ya que esto podría distorsionar la imagen.
+- Solo se procesan los formatos de imagen soportados: webp, png, jpg, jpeg.
+
+## Licencia
+
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles.
+
+## Autor
+
+Raúl Caro Pastorino
