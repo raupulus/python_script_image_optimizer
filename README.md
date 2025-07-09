@@ -20,7 +20,7 @@ Este script de Python está diseñado para optimizar imágenes de forma recursiv
 1. Clona este repositorio:
 
 ```bash
-git clone https://github.com/tu-usuario/python_script_image_optimizer.git
+git clone https://github.com/raupulus/python_script_image_optimizer.git
 cd python_script_image_optimizer
 ```
 
@@ -91,7 +91,7 @@ El script se puede ejecutar directamente usando el script bash proporcionado:
 
 El script `run_optimizer.sh` gestiona automáticamente el entorno virtual:
 
-1. Verifica si existe un entorno virtual en la carpeta `venv`
+1. Verifica si existe un entorno virtual en la carpeta `.venv`
 2. Si no existe, lo crea e instala las dependencias necesarias
 3. Activa el entorno virtual antes de ejecutar el script
 4. Desactiva el entorno virtual al finalizar
@@ -103,9 +103,9 @@ Si prefieres gestionar manualmente el entorno virtual:
 python3 -m venv .venv
 
 # Activar entorno virtual
-source venv/bin/activate  # En Linux/Mac
+source .venv/bin/activate  # En Linux/Mac
 # o
-venv\Scripts\activate     # En Windows
+.venv\Scripts\activate     # En Windows
 
 # Instalar dependencias
 pip install -r requirements.txt
